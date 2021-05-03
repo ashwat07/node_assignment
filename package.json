@@ -1,0 +1,31 @@
+{
+  "name": "nodeassignment",
+  "version": "1.0.0",
+  "description": "Node Assignment",
+  "main": "app.ts",
+  "scripts": {
+    "start": "tsc && nodemon dist/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashwat07/node_assignment.git"
+  },
+  "author": "Ashwath Acharya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ashwat07/node_assignment/issues"
+  },
+  "homepage": "https://github.com/ashwat07/node_assignment#readme",
+  "devDependencies": {
+    "@types/express": "^4.16.1",
+    "nodemon": "^2.0.7",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "mysql": "^2.18.1",
+    "request": "^2.88.2"
+  }
+}
