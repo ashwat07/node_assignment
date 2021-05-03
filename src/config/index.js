@@ -8,4 +8,9 @@ const connection = mysql.createConnection({
   password: "",
 });
 
+connection.connect((err) => {
+  if (err) throw err;
+  console.log("Database Server Connected!");
+});
+
 export default connection;

@@ -11,5 +11,10 @@ var connection = mysql_1.default.createConnection({
     user: db_config_1.default.USER,
     password: "",
 });
+connection.connect(function (err) {
+    if (err)
+        throw err;
+    console.log("Database Server Connected!");
+});
 exports.default = connection;
 //# sourceMappingURL=index.js.map
