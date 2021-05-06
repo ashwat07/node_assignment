@@ -1,8 +1,9 @@
+import express from "express";
 import constants from "../constants";
 import sql from "../config";
 
 export default {
-  getItems: (req: any, res: any) => {
+  getItems: (req: express.Request, res: express.Response) => {
     sql.query("SELECT * from items", (err: any, res: any) => {
       if (err) {
         console.log(err);
@@ -13,7 +14,7 @@ export default {
     res.send({ response: "okay" });
   },
 
-  addItems: (req: any, res: any) => {
+  addItems: (req: express.Request, res: express.Response) => {
     const { item } = req.body;
     if (item) {
       if (constants.acceptedItems.indexOf(item) !== -1) {
@@ -23,21 +24,19 @@ export default {
             "', '" +
             item +
             "' )",
-          (err: any, res: any) => {
-            if (err) {
-              console.log(err);
-            }
+          (err: any) => {
+            if (err) res.send({ message: "Save item failed!" });
 
-            console.log(res);
+            res.send({ message: "Item saved successfully!" });
           }
         );
       } else {
         res.status(400);
-        res.send({ error: "Unacceptable Item provided!" });
+        res.send({ message: "Unacceptable Item provided!" });
       }
     } else {
       res.status(400);
-      res.send({ error: "Invalid Request!" });
+      res.send({ message: "Invalid Request!" });
     }
   },
 };

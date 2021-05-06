@@ -24,21 +24,21 @@ exports.default = {
                     "Pending" +
                     "', '" +
                     item +
-                    "' )", function (err, res) {
+                    "' )", function (err, response) {
                     if (err) {
                         console.log(err);
                     }
-                    console.log(res);
+                    res.send({ message: "Item saved successfully!" });
                 });
             }
             else {
                 res.status(400);
-                res.send({ error: "Unacceptable Item provided!" });
+                res.send({ message: "Unacceptable Item provided!" });
             }
         }
         else {
             res.status(400);
-            res.send({ error: "Invalid Request!" });
+            res.send({ message: "Invalid Request!" });
         }
     },
 };
