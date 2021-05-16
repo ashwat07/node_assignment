@@ -1,22 +1,17 @@
 import express from "express";
+import joi from "joi";
+
 import constants from "../constants";
 import sql from "../config";
 
-export default {
-  getItems: (req: express.Request, res: express.Response) => {
-    sql.query("SELECT * from items", (err: any, res: any) => {
-      if (err) {
-        console.log(err);
-      }
-      console.log(res);
-    });
-    res.status(200);
-    res.send({ response: "okay" });
-  },
+const schema = joi.object({
+  item: joi.string().required(),
+});
 
-  addItems: (req: express.Request, res: express.Response) => {
-    const { item } = req.body;
-    if (item) {
+export default {
+  addItems: async (req: express.Request, res: express.Response) => {
+    try {
+      const { item } = await schema.validateAsync(req.body);
       if (constants.acceptedItems.indexOf(item) !== -1) {
         sql.query(
           "INSERT INTO items (status, item) VALUES ('" +
@@ -25,18 +20,26 @@ export default {
             item +
             "' )",
           (err: any) => {
-            if (err) res.send({ message: "Save item failed!" });
-
-            res.send({ message: "Item saved successfully!" });
+            if (err) res.status(500).send({ message: err });
           }
         );
+        res.status(200).send({ message: `Item saved successfully!` });
       } else {
-        res.status(400);
-        res.send({ message: "Unacceptable Item provided!" });
+        res.status(400).send({ message: `Invalid item!` });
       }
-    } else {
-      res.status(400);
-      res.send({ message: "Invalid Request!" });
+    } catch (error) {
+      res.status(400).send({ message: error.details[0].message });
+    }
+  },
+
+  getItems: (_: any, res: express.Response) => {
+    try {
+      sql.query("SELECT * from items", (err: any, response: any) => {
+        if (err) throw new Error(err);
+        res.status(200).send({ data: response });
+      });
+    } catch (error) {
+      res.status(500).send({ message: "Something went wrong!" });
     }
   },
 };

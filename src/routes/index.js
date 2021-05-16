@@ -3,7 +3,7 @@ import controller from "../controller";
 
 const router = expressRouter();
 
-router.get("/getItems", controller.getItems);
+router.get("/", controller.getItems);
 router.post("/addItem", controller.addItems);
 
 export default router;
