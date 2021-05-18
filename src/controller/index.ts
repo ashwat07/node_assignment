@@ -42,4 +42,8 @@ export default {
       res.status(500).send({ message: "Something went wrong!" });
     }
   },
+
+  getDelayValue: (_: any, res: express.Response) {
+    console.log(res)
+  }
 };
