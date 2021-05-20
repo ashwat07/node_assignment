@@ -87,9 +87,11 @@ exports.default = {
             });
         }
         catch (error) {
-            console.log(error);
             res.status(500).send({ message: "Something went wrong!" });
         }
+    },
+    getDelayValue: function (req, res) {
+        console.log(req.query.delay_value);
     },
 };
 //# sourceMappingURL=index.js.map

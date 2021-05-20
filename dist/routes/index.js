@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var controller_1 = __importDefault(require("../controller"));
 var router = express_1.Router();
-router.get("/", controller_1.default.getItems);
+router.get("/", controller_1.default.getDelayValue);
+router.get("/getItems", controller_1.default.getItems);
 router.post("/addItem", controller_1.default.addItems);
 exports.default = router;
 //# sourceMappingURL=index.js.map
