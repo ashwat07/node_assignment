@@ -10,5 +10,3 @@ app.use("/", routes);
 app.listen(port, () => {
   console.log(`Server is listening at ${port}`);
 });
-
-console.log(process.env.PROCESS_TYPE);
