@@ -1,6 +1,9 @@
 import express from "express";
 import joi from "joi";
+import fetch from "node-fetch";
+// import request from "request";
 
+import { performance } from "perf_hooks";
 import constants from "../constants";
 import sql from "../config";
 
@@ -43,7 +46,21 @@ const getItems = async (_: any, res: express.Response) => {
 };
 
 const getDelayValue = (req: any, res: express.Response) => {
-  console.log(req.query.delay_value);
+  const { delay_value } = req.query;
+  const concurrent = Array(5)
+    .fill(externalEntityCall)
+    .map((fn) => fn(delay_value));
+  const t0 = performance.now();
+  Promise.all(concurrent)
+    .then(() => {
+      const t1 = performance.now();
+      res.status(200).send({ time_taken: t1 - t0 });
+    })
+    .catch(() => res.status(500).send({ message: "OOps!!" }));
+};
+
+const externalEntityCall = async (q: Number) => {
+  await fetch(`https://httpbin.org/delay/${q}`);
 };
 
 export default {
