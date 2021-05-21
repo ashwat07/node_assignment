@@ -14,7 +14,7 @@ var connection = mysql_1.default.createConnection({
 connection.connect(function (err) {
     if (err)
         console.error(err);
-    // console.log("Database Server Connected!");
+    console.log("Database Server Connected!");
 });
 exports.default = connection;
 //# sourceMappingURL=index.js.map

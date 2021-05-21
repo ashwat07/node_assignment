@@ -47,9 +47,8 @@ const getItems = async (_: any, res: express.Response) => {
 
 const getDelayValue = (req: any, res: express.Response) => {
   const { delay_value } = req.query;
-  const concurrent = Array(5)
-    .fill(externalEntityCall)
-    .map((fn) => fn(delay_value));
+  const concurrent = Array(5).fill(externalEntityCall(delay_value));
+
   const t0 = performance.now();
   Promise.all(concurrent)
     .then(() => {
@@ -59,8 +58,8 @@ const getDelayValue = (req: any, res: express.Response) => {
     .catch(() => res.status(500).send({ message: "OOps!!" }));
 };
 
-const externalEntityCall = async (q: Number) => {
-  await fetch(`https://httpbin.org/delay/${q}`);
+const externalEntityCall = (q: Number) => {
+  return fetch(`https://httpbin.org/delay/${q}`);
 };
 
 export default {

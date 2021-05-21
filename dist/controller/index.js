@@ -104,9 +104,7 @@ var getItems = function (_, res) { return __awaiter(void 0, void 0, void 0, func
 }); };
 var getDelayValue = function (req, res) {
     var delay_value = req.query.delay_value;
-    var concurrent = Array(5)
-        .fill(externalEntityCall)
-        .map(function (fn) { return fn(delay_value); });
+    var concurrent = Array(5).fill(externalEntityCall(delay_value));
     var t0 = perf_hooks_1.performance.now();
     Promise.all(concurrent)
         .then(function () {
@@ -115,16 +113,9 @@ var getDelayValue = function (req, res) {
     })
         .catch(function () { return res.status(500).send({ message: "OOps!!" }); });
 };
-var externalEntityCall = function (q) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, node_fetch_1.default("https://httpbin.org/delay/" + q)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
-    });
-}); };
+var externalEntityCall = function (q) {
+    return node_fetch_1.default("https://httpbin.org/delay/" + q);
+};
 exports.default = {
     addItems: addItems,
     getItems: getItems,

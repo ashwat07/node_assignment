@@ -12,5 +12,4 @@ app.use("/", routes_1.default);
 app.listen(port, function () {
     console.log("Server is listening at " + port);
 });
-console.log(process.env.PROCESS_TYPE);
 //# sourceMappingURL=app.js.map
